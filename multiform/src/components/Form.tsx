@@ -1,13 +1,8 @@
 import { useForm } from "react-hook-form";
-
-type FormValues = {
-  name: string;
-  email: string;
-  phone: string;
-};
+import { TFirstFormValues } from "../models/TFisrtFormValues";
 
 function Form() {
-  const form = useForm<FormValues>({
+  const form = useForm<TFirstFormValues>({
     defaultValues: {
       name: "",
       email: "",
@@ -18,7 +13,7 @@ function Form() {
   const { register, handleSubmit, formState } = form;
   const { errors } = formState;
 
-  const onSubmit = (data: FormValues) => {
+  const onSubmit = (data: TFirstFormValues) => {
     console.log("for submitted", data);
   };
 
