@@ -1,5 +1,6 @@
 import { useForm } from "react-hook-form";
 import { TFirstFormValues } from "../models/TFisrtFormValues";
+import { useFormStore } from "../stores/formStore";
 
 function Form() {
   const form = useForm<TFirstFormValues>({
@@ -10,15 +11,11 @@ function Form() {
     },
   });
 
+  const { firstForm, addCounter } = useFormStore();
   const { register, handleSubmit, formState } = form;
-  const { errors } = formState;
-
-  const onSubmit = (data: TFirstFormValues) => {
-    console.log("for submitted", data);
-  };
 
   return (
-    <div className="relative">
+    <div className="relative h-full flex flex-col">
       <h1 className="font-bold size text-2xl">Personal info</h1>
       <h3 className="text-gray-600 mb-6">
         Please provide your name, email address, andphone number
@@ -90,7 +87,7 @@ function Form() {
         <button
           type="button"
           onClick={handleSubmit(onSubmit)}
-          className="absolute bottom-[-50%] right-0 bg-blue-950 text-white p-2 rounded-lg ps-5 pe-5 text-end"
+          className="absolute right-[1em] bottom-[1em] bg-blue-950 text-white p-2 rounded-lg ps-5 pe-5"
         >
           Next step
         </button>
