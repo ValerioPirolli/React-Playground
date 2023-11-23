@@ -7,10 +7,16 @@ type TStoreState = {
   userData: TUserData;
   userPlan: TPlan;
   stepCounter: number;
+  addons: {
+    piano1: boolean;
+    piano2: boolean;
+    piano3: boolean;
+  };
   setUserData: (data: TUserData) => void;
   setUserPlan: (data: TPlan) => void;
   addCounter: () => void;
-  removeCounter: () => void;
+  counterToOne: () => void;
+  setAddOns: (addOn: keyof TStoreState["addons"], value: boolean) => void;
 };
 
 export const useFormStore = create<TStoreState>()(
@@ -25,6 +31,11 @@ export const useFormStore = create<TStoreState>()(
       periodicity: "montly",
     },
     stepCounter: 0,
+    addons: {
+      piano1: false,
+      piano2: false,
+      piano3: false,
+    },
     addCounter: () =>
       set(
         (state) => ({
@@ -46,11 +57,20 @@ export const useFormStore = create<TStoreState>()(
         userPlan,
       }));
     },
-    removeCounter: () =>
+    setAddOns: (addOn, value) => {
+      set((state) => ({
+        ...state,
+        addons: {
+          ...state.addons,
+          [addOn]: value,
+        },
+      }));
+    },
+    counterToOne: () =>
       set(
         (state) => ({
           ...state,
-          stepCounter: state.stepCounter - 1,
+          stepCounter: (state.stepCounter = 1),
         }),
         undefined,
         "decremento step"

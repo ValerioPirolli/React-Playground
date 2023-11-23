@@ -4,7 +4,11 @@ import { useFormStore } from "../stores/formStore";
 import { TPlan } from "../models/TPlan";
 
 function BillingFormStep() {
-  const { removeCounter, setUserPlan } = useFormStore();
+  const {
+    counterToOne: removeCounter,
+    setUserPlan,
+    addCounter,
+  } = useFormStore();
 
   const handleButtonClick: React.MouseEventHandler<HTMLButtonElement> = () => {
     removeCounter();
@@ -23,6 +27,7 @@ function BillingFormStep() {
       periodicity: !isChecked ? "montly" : "yearly",
     };
     setUserPlan(userPlan);
+    addCounter();
   };
 
   return (

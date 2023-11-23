@@ -27,6 +27,9 @@ function StepsGroup() {
     },
   ];
   function checkStatus(id: number) {
+    if (stepCounter >= 4 && id === 3) {
+      return true;
+    }
     return stepCounter === id;
   }
 

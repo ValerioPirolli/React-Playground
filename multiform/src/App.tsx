@@ -4,7 +4,8 @@ import BillingFormStep from "./components/BillingFormStep";
 import StepsGroup from "./components/StepsGroup";
 import { useFormStore } from "./stores/formStore";
 import AddOnsStep from "./components/AddOnsStep";
-import AddOn from "./components/AddOn";
+import FinishUpStep from "./components/FinishUpStep";
+import ThankYouStep from "./components/ThankYouStep";
 
 function App() {
   const { stepCounter } = useFormStore();
@@ -19,6 +20,12 @@ function App() {
     case 2:
       currentStepComponent = <AddOnsStep />;
       break;
+    case 3:
+      currentStepComponent = <FinishUpStep />;
+      break;
+    case 4:
+      currentStepComponent = <ThankYouStep />;
+      break;
     default:
       currentStepComponent = <UserFormStep />;
       break;
@@ -28,8 +35,8 @@ function App() {
       <div className="h-full">
         <StepsGroup />
       </div>
-      <div className="flex-1 text-black p-1 ps-10 pe-10">
-        <AddOn></AddOn>
+      <div className="flex-1 text-black p-1 ps-10 pe-10 h-full">
+        {currentStepComponent}
       </div>
     </div>
   );
