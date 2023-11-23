@@ -1,9 +1,14 @@
 import { useForm } from "react-hook-form";
-import { TFirstFormValues } from "../models/TFisrtFormValues";
+import { TUserData } from "../models/TUserData";
 import { useFormStore } from "../stores/formStore";
 
-function Form() {
-  const form = useForm<TFirstFormValues>({
+function UserFormStep() {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    getValues,
+  } = useForm<TUserData>({
     defaultValues: {
       name: "",
       email: "",
@@ -11,8 +16,10 @@ function Form() {
     },
   });
 
-  const { firstForm, addCounter } = useFormStore();
-  const { register, handleSubmit, formState } = form;
+  const { addCounter, setUserData } = useFormStore();
+  const onSubmit = () => {
+    setUserData(getValues()), addCounter();
+  };
 
   return (
     <div className="relative h-full flex flex-col">
@@ -30,7 +37,7 @@ function Form() {
           </label>
           <input
             placeholder="e.g Stephen King"
-            className="w-50 bg-transparent border-[1px] rounded-md h-8 p-2 border-gray-300"
+            className="w-50 bg-transparent border rounded-md h-8 p-2 border-gray-300"
             type="text"
             id="name"
             {...register("name", {
@@ -51,7 +58,7 @@ function Form() {
           </label>
           <input
             placeholder="e.g stephenking@lorem.com"
-            className="w-50 bg-transparent border-[1px] rounded-md h-8 p-2 border-gray-300"
+            className="w-50 bg-transparent border rounded-md h-8 p-2 border-gray-300"
             type="text"
             id="email"
             {...register("email", {
@@ -73,7 +80,7 @@ function Form() {
 
           <input
             placeholder="e.g +1 234 567 890"
-            className="w-50 bg-transparent border-[1px] rounded-md h-8 p-2 border-gray-300"
+            className="w-50 bg-transparent border rounded-md h-8 p-2 border-gray-300"
             type="text"
             id="name"
             {...register("phone", {
@@ -87,7 +94,7 @@ function Form() {
         <button
           type="button"
           onClick={handleSubmit(onSubmit)}
-          className="absolute right-[1em] bottom-[1em] bg-blue-950 text-white p-2 rounded-lg ps-5 pe-5"
+          className="absolute right-4 bottom-4 bg-blue-950 text-white p-2 rounded-lg ps-5 pe-5"
         >
           Next step
         </button>
@@ -96,4 +103,4 @@ function Form() {
   );
 }
 
-export default Form;
+export default UserFormStep;

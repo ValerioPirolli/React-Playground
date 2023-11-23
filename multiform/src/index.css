@@ -15,8 +15,9 @@
   -moz-osx-font-smoothing: grayscale;
 }
 .left-sidebar {
+  aspect-ratio: 9/19;
   background-image: url(assets/bg-sidebar-desktop.svg);
-  background-position: left;
-  background-size: contain;
+  background-position: center;
+  background-size: cover;
   background-repeat: no-repeat;
 }

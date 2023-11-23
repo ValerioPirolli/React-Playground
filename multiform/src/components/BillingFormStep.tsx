@@ -1,24 +1,29 @@
 import { useForm, Controller, useWatch } from "react-hook-form";
 import { useState } from "react";
+import { useFormStore } from "../stores/formStore";
+import { TPlan } from "../models/TPlan";
 
-function FormStep2() {
+function BillingFormStep() {
+  const { removeCounter, setUserPlan } = useFormStore();
+
+  const handleButtonClick: React.MouseEventHandler<HTMLButtonElement> = () => {
+    removeCounter();
+  };
+
   const [isChecked, setChecked] = useState(false);
   const handleToggle = () => {
     setChecked(!isChecked);
   };
 
-  const onSubmit = (data) => {
-    console.log(data);
-    // Esegui le azioni necessarie con i dati del modulo
+  const { control, handleSubmit } = useForm();
+  const value = useWatch({ control, name: "name" });
+  const onSubmit = () => {
+    const userPlan: TPlan = {
+      name: value,
+      periodicity: !isChecked ? "montly" : "yearly",
+    };
+    setUserPlan(userPlan);
   };
-
-  const {
-    control,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
-
-  const sesso = useWatch({ control, name: "sesso" }); // Monitora il valore del radio button 'sesso'
 
   return (
     <div className="h-full flex flex-col">
@@ -29,15 +34,15 @@ function FormStep2() {
       <form onSubmit={handleSubmit(onSubmit)}>
         <div>
           <Controller
-            name="sesso"
+            name="name"
             control={control}
             rules={{ required: "Campo obbligatorio" }}
             render={({ field }) => (
-              <div className="flex  w-[100%] justify-around items-center">
-                <label className="w-[20%]">
+              <div className="flex w-full justify-around items-center">
+                <label className="w-[28%]">
                   <div
                     className={`rounded-md border-[1px] p-4 ${
-                      sesso === "arcade"
+                      value === "arcade"
                         ? "border-blue-700 bg-blue-50"
                         : "border-gray-500"
                     }`}
@@ -59,11 +64,11 @@ function FormStep2() {
                     </svg>
                     <h2 className="font-bold mt-9">Arcade</h2>
                     {!isChecked ? (
-                      <p>$9/mo</p>
+                      <p className="text-sm">$9/mo</p>
                     ) : (
                       <>
                         <p>$90/yr</p>
-                        <p>2 months free</p>
+                        <p className="text-xs">2 months free</p>
                       </>
                     )}
                   </div>
@@ -75,10 +80,10 @@ function FormStep2() {
                   />
                 </label>
 
-                <label className="w-[20%]">
+                <label className="w-[28%]">
                   <div
-                    className={`rounded-md border-[1px] p-4 ${
-                      sesso === "advanced"
+                    className={`rounded-md border p-4 ${
+                      value === "advanced"
                         ? "border-blue-700 bg-blue-50"
                         : "border-gray-500"
                     }`}
@@ -100,11 +105,11 @@ function FormStep2() {
                     </svg>
                     <h2 className="font-bold mt-9">Advanced</h2>
                     {!isChecked ? (
-                      <p>$9/mo</p>
+                      <p className="text-sm">$12/mo</p>
                     ) : (
                       <>
-                        <p>$90/yr</p>
-                        <p>2 months free</p>
+                        <p>$120/yr</p>
+                        <p className="text-xs">2 months free</p>
                       </>
                     )}
                   </div>
@@ -116,10 +121,10 @@ function FormStep2() {
                   />
                 </label>
 
-                <label className="w-[20%]">
+                <label className="w-[28%]">
                   <div
                     className={`rounded-md border-[1px] p-4 ${
-                      sesso == "pro"
+                      value == "pro"
                         ? "border-blue-700 bg-blue-50"
                         : "border-gray-500"
                     }`}
@@ -145,7 +150,7 @@ function FormStep2() {
                     ) : (
                       <>
                         <p>$150/yr</p>
-                        <p>2 months free</p>
+                        <p className="text-xs">2 months free</p>
                       </>
                     )}
                   </div>
@@ -184,17 +189,19 @@ function FormStep2() {
           </label>
         </div>
       </form>
+
       <div className="relative bottom-0 right-0 h-full">
         <button
+          onClick={handleButtonClick}
           type="button"
-          className="absolute left-[1em] bottom-[1em] bg-transparent text-gray-400 p-2 rounded-lg ps-5 pe-5 font-bold"
+          className="absolute left-4 bottom-4 bg-transparent text-gray-400 p-2 rounded-lg ps-5 pe-5 font-bold"
         >
           Go Back
         </button>
         <button
           type="button"
           onClick={handleSubmit(onSubmit)}
-          className="absolute right-[1em] bottom-[1em] bg-blue-950 text-white p-2 rounded-lg ps-5 pe-5"
+          className="absolute right-4 bottom-4 bg-blue-950 text-white p-2 rounded-lg ps-5 pe-5"
         >
           Next step
         </button>
@@ -203,4 +210,4 @@ function FormStep2() {
   );
 }
 
-export default FormStep2;
+export default BillingFormStep;

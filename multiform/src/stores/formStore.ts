@@ -1,26 +1,59 @@
+import { devtools } from "zustand/middleware";
 import { create } from "zustand";
-import { TFirstFormValues } from "../models/TFisrtFormValues";
+import { TUserData } from "../models/TUserData";
+import { TPlan } from "../models/TPlan";
 
-type TamzStoreState = {
-  firstForm: TFirstFormValues;
-  counter: number;
+type TStoreState = {
+  userData: TUserData;
+  userPlan: TPlan;
+  stepCounter: number;
+  setUserData: (data: TUserData) => void;
+  setUserPlan: (data: TPlan) => void;
   addCounter: () => void;
   removeCounter: () => void;
 };
 
-export const useFormStore = create<TamzStoreState>((set) => ({
-  firstForm: {
-    name: "",
-    email: "",
-    phone: "",
-  },
-  counter: 0,
-  addCounter: () =>
-    set((state) => ({
-      counter: state.counter + 1,
-    })),
-  removeCounter: () =>
-    set((state) => ({
-      counter: state.counter - 1,
-    })),
-}));
+export const useFormStore = create<TStoreState>()(
+  devtools((set) => ({
+    userData: {
+      name: "",
+      email: "",
+      phone: "",
+    },
+    userPlan: {
+      name: "arcade",
+      periodicity: "montly",
+    },
+    stepCounter: 0,
+    addCounter: () =>
+      set(
+        (state) => ({
+          ...state,
+          stepCounter: state.stepCounter + 1,
+        }),
+        undefined,
+        "incremento step"
+      ),
+    setUserData: (userData) => {
+      set((state) => ({
+        ...state,
+        userData,
+      }));
+    },
+    setUserPlan: (userPlan) => {
+      set((state) => ({
+        ...state,
+        userPlan,
+      }));
+    },
+    removeCounter: () =>
+      set(
+        (state) => ({
+          ...state,
+          stepCounter: state.stepCounter - 1,
+        }),
+        undefined,
+        "decremento step"
+      ),
+  }))
+);
