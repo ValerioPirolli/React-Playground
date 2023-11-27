@@ -13,23 +13,27 @@ function AddOnsStep() {
     },
     {
       id: "piano2",
-      title: "Online service",
-      subtitle: "access to multiplayer games",
-      montly: "+$1/mo",
-      yearly: "+$10/yr",
+      title: "Larger storage",
+      subtitle: "Extra 1TB of cloud save",
+      montly: "+$2/mo",
+      yearly: "+$20/yr",
     },
     {
       id: "piano3",
-      title: "Online service",
-      subtitle: "access to multiplayer games",
-      montly: "+$1/mo",
-      yearly: "+$10/yr",
+      title: "Customizable profile",
+      subtitle: "Custom theme of your profile",
+      montly: "+$2/mo",
+      yearly: "+$20/yr",
     },
   ];
 
-  const { addCounter, counterToOne: removeCounter } = useFormStore();
+  const { addCounter, deleteCounter } = useFormStore();
   const rCounter: React.MouseEventHandler<HTMLButtonElement> = () => {
-    removeCounter();
+    //setAddOns("piano1", false);
+    //setAddOns("piano2", false);
+    // setAddOns("piano3", false);
+
+    deleteCounter();
   };
   const aCounter: React.MouseEventHandler<HTMLButtonElement> = () => {
     addCounter();

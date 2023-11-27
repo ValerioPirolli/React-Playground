@@ -15,8 +15,9 @@ type TStoreState = {
   setUserData: (data: TUserData) => void;
   setUserPlan: (data: TPlan) => void;
   addCounter: () => void;
+  deleteCounter: () => void;
   counterToOne: () => void;
-  setAddOns: (addOn: keyof TStoreState["addons"], value: boolean) => void;
+  setAddOns: (addOn: keyof TStoreState["addons"], value: boolean) => void; //da chiedere
 };
 
 export const useFormStore = create<TStoreState>()(
@@ -45,6 +46,11 @@ export const useFormStore = create<TStoreState>()(
         undefined,
         "incremento step"
       ),
+    deleteCounter: () =>
+      set((state) => ({
+        ...state,
+        stepCounter: state.stepCounter - 1,
+      })),
     setUserData: (userData) => {
       set((state) => ({
         ...state,

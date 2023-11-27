@@ -1,13 +1,8 @@
 import { useFormStore } from "../stores/formStore";
 
 function FinishUpStep() {
-  const {
-    addons,
-    userPlan,
-    counterToOne: removeCounter,
-    addCounter,
-    counterToOne,
-  } = useFormStore();
+  const { addons, userPlan, deleteCounter, addCounter, counterToOne } =
+    useFormStore();
   const saldo = () => {
     let calc = 0;
 
@@ -41,8 +36,9 @@ function FinishUpStep() {
       return `${calc * 10} $/yr`;
     }
   };
+  const oneIsTrue = Object.values(addons).some((data) => data == true);
   const rCounter: React.MouseEventHandler<HTMLButtonElement> = () => {
-    removeCounter();
+    deleteCounter();
   };
   const aCounter: React.MouseEventHandler<HTMLButtonElement> = () => {
     addCounter();
@@ -71,7 +67,7 @@ function FinishUpStep() {
           </div>
           <p>$9/mo</p>
         </div>
-        <hr className="my-4" />
+        {oneIsTrue ? <hr className="my-4" /> : ""}
         <div>
           {addons.piano1 ? (
             <div className="flex">

@@ -34,15 +34,17 @@ function StepsGroup() {
   }
 
   return (
-    <div className="left-sidebar p-8 h-full flex flex-col">
-      {steps.map((step) => (
-        <Step
-          key={step.id}
-          id={step.id}
-          text={step.text}
-          status={step.status}
-        />
-      ))}
+    <div className="left-sidebar p-8 lg:h-full mx-auto">
+      <div className="flex lg:flex-col justify-between w-1/2">
+        {steps.map((step) => (
+          <Step
+            key={step.id}
+            id={step.id}
+            text={step.text}
+            status={step.status}
+          />
+        ))}
+      </div>
     </div>
   );
 }

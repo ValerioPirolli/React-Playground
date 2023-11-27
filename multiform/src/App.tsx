@@ -31,14 +31,21 @@ function App() {
       break;
   }
   return (
-    <div className=" bg-white m-5 p-3 rounded-lg flex max-w-[60%] mx-auto aspect-[1027/657]">
-      <div className="h-full">
-        <StepsGroup />
+    <>
+      <div className=" bg-white m-5 p-3 rounded-lg max-w-[60%] mx-auto aspect-[1027/657] hidden md:block">
+        <div className="h-full">
+          <StepsGroup />
+        </div>
+        <div className="flex-1 text-black p-1 ps-10 pe-10 h-full">
+          {currentStepComponent}
+        </div>
       </div>
-      <div className="flex-1 text-black p-1 ps-10 pe-10 h-full">
-        {currentStepComponent}
+      <div className="lg:hidden">
+        <div className="w-full">
+          <StepsGroup />
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 
